@@ -1,0 +1,4 @@
+tconfigitem.o: tconfigitem.cpp tconfigitem.h tstring.h
+tconfigitem.cpp :
+tconfigitem.h :
+tstring.h :

@@ -1,0 +1,78 @@
+This file contains any messages produced by compilers while
+running configure, to aid debugging if configure makes a mistake.
+
+configure:570: checking for a BSD compatible install
+configure:623: checking whether build environment is sane
+configure:680: checking whether make sets ${MAKE}
+configure:726: checking for working aclocal
+configure:739: checking for working autoconf
+configure:752: checking for working automake
+configure:765: checking for working autoheader
+configure:778: checking for working makeinfo
+configure:798: checking whether make sets ${MAKE}
+configure:829: checking for c++
+configure:861: checking whether the C++ compiler (c++  ) works
+configure:877: c++ -o conftest    conftest.C  1>&5
+configure:903: checking whether the C++ compiler (c++  ) is a cross-compiler
+configure:908: checking whether we are using GNU C++
+configure:917: c++ -E conftest.C
+configure:936: checking whether c++ accepts -g
+configure:979: checking for a BSD compatible install
+configure:1034: checking for ranlib
+configure:1073: checking host system type
+configure:1094: checking target system type
+configure:1133: checking how to run the C preprocessor
+configure:1154: cc -E  conftest.c >/dev/null 2>conftest.out
+configure:1217: checking for X
+configure:1531: checking for dnet_ntoa in -ldnet
+configure:1550: cc -o conftest    conftest.c -ldnet   1>&5
+/usr/bin/ld: cannot find -ldnet
+collect2: ld returned 1 exit status
+configure: failed program was:
+#line 1539 "configure"
+#include "confdefs.h"
+/* Override any gcc2 internal prototype to avoid an error.  */
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char dnet_ntoa();
+
+int main() {
+dnet_ntoa()
+; return 0; }
+configure:1572: checking for dnet_ntoa in -ldnet_stub
+configure:1591: cc -o conftest    conftest.c -ldnet_stub   1>&5
+/usr/bin/ld: cannot find -ldnet_stub
+collect2: ld returned 1 exit status
+configure: failed program was:
+#line 1580 "configure"
+#include "confdefs.h"
+/* Override any gcc2 internal prototype to avoid an error.  */
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char dnet_ntoa();
+
+int main() {
+dnet_ntoa()
+; return 0; }
+configure:1620: checking for gethostbyname
+configure:1648: cc -o conftest    conftest.c  1>&5
+configure:1718: checking for connect
+configure:1746: cc -o conftest    conftest.c  1>&5
+configure:1810: checking for remove
+configure:1838: cc -o conftest    conftest.c  1>&5
+configure:1902: checking for shmat
+configure:1930: cc -o conftest    conftest.c  1>&5
+configure:2003: checking for IceConnectionNumber in -lICE
+configure:2022: cc -o conftest    -L/usr/X11R6/lib conftest.c -lICE   1>&5
+configure:2102: checking for sdl-config
+configure:2137: checking for SDL - version >= 1.2.1
+configure:2222: cc -o conftest  -I/usr/include/SDL -D_REENTRANT   conftest.c  -L/usr/lib -lSDL -lpthread 1>&5
+configure:2310: checking for OpenGL support
+configure:2329: cc -c   conftest.c 1>&5
+configure:2350: checking for Mix_LoadMUS in -lSDL_mixer
+configure:2369: cc -o conftest    conftest.c -lSDL_mixer   -L/usr/lib -lSDL -lpthread 1>&5
+configure:2399: checking for IMG_isPNM in -lSDL_image
+configure:2418: cc -o conftest    conftest.c -lSDL_image   -L/usr/lib -lSDL -lpthread 1>&5
+configure:2448: checking for TTF_Init in -lSDL_ttf
+configure:2467: cc -o conftest    conftest.c -lSDL_ttf   -L/usr/lib -lSDL -lpthread 1>&5
+configure:2506: checking if --enable-debug=yes was given

@@ -1,0 +1,11 @@
+tconfigentry.o: tconfigentry.cpp tconfigentry.h tconfigitem.h tstring.h \
+  tconfig.h tconfigfile.h ttextfile.h tlist.h tsection.h
+tconfigentry.cpp :
+tconfigentry.h :
+tconfigitem.h :
+tstring.h :
+tconfig.h :
+tconfigfile.h :
+ttextfile.h :
+tlist.h :
+tsection.h :

@@ -1,0 +1,12 @@
+tdoubleentry.o: tdoubleentry.cpp tdoubleentry.h tconfig.h tconfigfile.h \
+  ttextfile.h tstring.h tlist.h tsection.h tconfigitem.h tconfigentry.h
+tdoubleentry.cpp :
+tdoubleentry.h :
+tconfig.h :
+tconfigfile.h :
+ttextfile.h :
+tstring.h :
+tlist.h :
+tsection.h :
+tconfigitem.h :
+tconfigentry.h :

@@ -1,0 +1,6 @@
+tsection.o: tsection.cpp tsection.h tstring.h tlist.h tconfigitem.h
+tsection.cpp :
+tsection.h :
+tstring.h :
+tlist.h :
+tconfigitem.h :

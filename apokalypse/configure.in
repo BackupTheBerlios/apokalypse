@@ -1,0 +1,150 @@
+# This first line initializes autoconf and gives it a file that it can
+# look for to make sure the source distribution is complete.
+AC_INIT(README)
+
+# The AM_INIT_AUTOMAKE macro tells automake the name and version number
+# of the software package so it can generate rules for building a source
+# archive.
+AM_INIT_AUTOMAKE(apokalypse, 0.0.1)
+AM_CONFIG_HEADER(config.h)
+# We now have a list of macros which tell autoconf what tools we need to
+# build our software, in this case "make", a C++ compiler, and "install".
+# If we were creating a C program, we would use AC_PROC_CC instead of CXX.
+AC_PROG_MAKE_SET
+AC_PROG_CXX
+AC_PROG_INSTALL
+AC_PROG_RANLIB
+
+# This is a trick I learned at Loki - the current compiler for the alpha
+# architecture doesn't produce code that works on all versions of the
+# alpha processor.  This bit detects the current compile architecture
+# and sets the compiler flags to produce portable binary code.
+AC_CANONICAL_HOST
+AC_CANONICAL_TARGET
+case "$target" in
+    alpha*-*-linux*)
+        CXXFLAGS="$CXXFLAGS -mcpu=ev4 -Wa,-mall"
+        ;;
+esac
+
+dnl Figure out which math library to use
+case "$target" in
+    *-*-mingw32*)
+        MATHLIB=""
+        SYS_GL_LIBS="-lopengl32 -lglu32"
+        ;;
+    *-*-beos*)
+        MATHLIB=""
+        SYS_GL_LIBS="-lGL"
+        ;;
+    *-*-darwin*)
+        MATHLIB=""
+        SYS_GL_LIBS=""
+        ;;
+    *)
+        MATHLIB="-lm"
+        AC_PATH_X
+        AC_PATH_XTRA
+        if test x$have_x = xyes; then
+            CXXFLAGS="$CXXFLAGS $X_CFLAGS"
+            SYS_GL_LIBS="$X_LIBS -lGL -lGLU"
+        else
+            SYS_GL_LIBS="-lGL -lGLU"
+        fi
+        ;;
+esac
+AC_SUBST(MATHLIB)
+
+# Use the macro SDL provides to check the installed version of the SDL
+# development environment.  Abort the configuration process if the
+# minimum version we require isn't available.
+SDL_VERSION=1.2.1
+AM_PATH_SDL($SDL_VERSION,
+            :,
+            AC_MSG_ERROR([*** SDL version $SDL_VERSION not found!])
+)
+# Add the SDL preprocessor flags and libraries to the build process
+CXXFLAGS="$CXXFLAGS $SDL_CFLAGS"
+LIBS="$LIBS $SDL_LIBS"
+
+dnl Check for OpenGL
+AC_MSG_CHECKING(for OpenGL support)
+have_opengl=no
+AC_TRY_COMPILE([
+ #if defined(__APPLE__) && defined(__MACH__)
+ #include <OpenGL/gl.h>
+ #include <OpenGL/glu.h>
+ #else
+ #include <GL/gl.h>
+ #include <GL/glu.h>
+ #endif
+],[
+],[
+have_opengl=yes
+])
+AC_MSG_RESULT($have_opengl)
+if test x$have_opengl = xyes; then
+    CXXFLAGS="$CXXFLAGS -DHAVE_OPENGL"
+    GL_LIBS="$SYS_GL_LIBS"
+#	LIBS="$LIBS $GL_LIBS"
+else
+    AC_MSG_ERROR(Unable to find OpenGL headers and libraries)
+fi
+AC_SUBST(GL_LIBS)
+
+dnl Look for a working SDL_mixer library
+AC_CHECK_LIB(SDL_mixer, Mix_LoadMUS, have_SDL_mixer=yes)
+if test x$have_SDL_mixer = xyes; then
+    CXXFLAGS="$CXXFLAGS -DHAVE_SOUND"
+    SOUND_LIBS="-lSDL_mixer"
+#	LIBS="$LIBS $SOUND_LIBS"
+else
+    AC_MSG_ERROR(Unable to find SDL_mixer libraries)
+fi
+AC_SUBST(SOUND_LIBS)
+
+dnl Look for a working SDL_image library
+AC_CHECK_LIB(SDL_image, IMG_isPNM, have_SDL_image=yes)
+if test x$have_SDL_image = xyes; then
+    CXXFLAGS="$CXXFLAGS -DHAVE_IMAGE"
+    IMAGE_LIBS="-lSDL_image"
+#	LIBS="$LIBS $IMAGE_LIBS"
+else
+    AC_MSG_ERROR(Unable to find SDL_image libraries)
+fi
+AC_SUBST(IMAGE_LIBS)
+
+dnl Look for a working SDL_ttf library
+AC_CHECK_LIB(SDL_ttf, TTF_Init, have_SDL_ttf=yes)
+if test x$have_SDL_ttf = xyes; then
+    CXXFLAGS="$CXXFLAGS -DHAVE_TTF"
+    TTF_LIBS="-lSDL_ttf"
+#	LIBS="$LIBS $TTF_LIBS"
+else
+    AC_MSG_ERROR(Unable to find SDL_ttf libraries)
+fi
+AC_SUBST(TTF_LIBS)
+
+# enable Debugging (or not)
+AC_ARG_ENABLE(debug, [  --enable-debug=yes       enable Debuggingcode],
+		    , enable_debugging=no)
+AC_MSG_CHECKING(if --enable-debug=yes was given)
+if test x$enable_debugging != xno; then
+	CXXFLAGS="$CXXFLAGS -DDEBUG"
+	AC_MSG_RESULT(yes)
+else
+	AC_MSG_RESULT(no)
+fi
+
+# Finally create all the generated files
+# The configure script takes "file.in" and substitutes variables to produce
+# "file".  In this case we are just generating the Makefiles, but this could
+# be used to generate any number of automatically generated files.
+AC_OUTPUT([
+Makefile
+data/Makefile
+doc/Makefile
+src/Makefile
+src/libcpputil/Makefile
+])
+
