@@ -1,4 +1,0 @@
-tconfigstring.o: tconfigstring.cpp tconfigstring.h tstring.h
-tconfigstring.cpp :
-tconfigstring.h :
-tstring.h :

@@ -1,4 +1,0 @@
-tline.o: tline.cpp tline.h tstring.h
-tline.cpp :
-tline.h :
-tstring.h :
